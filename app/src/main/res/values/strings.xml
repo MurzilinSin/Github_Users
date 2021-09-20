@@ -1,7 +1,3 @@
 <resources>
-    <string name="app_name">Android4_Lesson1</string>
-    <string name="counter_one">Counter 1</string>
-    <string name="counter_two">Counter 2</string>
-    <string name="counter_three">Counter 3</string>
-    <string name="zero">0</string>
+    <string name="app_name">Client_GitHub</string>
 </resources>
