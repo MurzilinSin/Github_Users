@@ -37,9 +37,20 @@ class UsersPresenter(
         }
     }
 
-    fun loadData() {
-        val users = repo.getUsers()
-        usersListPresenter.users.addAll(users)
+    private fun loadData() {
+        /* val users = repo.getUsers()
+         users?.subscribe{
+             usersListPresenter.users.addAll(it)
+         }*/
+        /*val usersIterable = repo.getUsersFromIterable()
+        usersIterable?.subscribe{
+            usersListPresenter.users.add(it)
+        }*/
+        val users = repo.getObservableUsers()
+        users.subscribe{
+            usersListPresenter.users.add(it)
+        }
+
         viewState.updateList()
     }
 
