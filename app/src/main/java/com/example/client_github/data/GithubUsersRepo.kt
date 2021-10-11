@@ -7,4 +7,5 @@ import io.reactivex.rxjava3.kotlin.toObservable
 
 class GithubUsersRepo {
     fun getUsers() = ApiHolder.apiService.getUsers()
+    fun getRepo(name: String) = ApiHolder.apiService.getUserRepos(name)
 }

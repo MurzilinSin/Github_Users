@@ -21,6 +21,7 @@ class UsersPresenter(
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
             view.showLogin(user.login.orEmpty())
+            view.showAvatar(user.avatarUrl.orEmpty())
         }
 
         override fun getCount(): Int  = users.size
@@ -33,12 +34,11 @@ class UsersPresenter(
         viewState.init()
         loadData()
         usersListPresenter.itemClickListener = { itemView ->
-            router.navigateTo(AndroidScreens.userDetailScreen(usersListPresenter.users[itemView.pos].login.orEmpty()))
+            router.navigateTo(AndroidScreens.reposScreen(usersListPresenter.users[itemView.pos].login.orEmpty()))
         }
     }
 
     private fun loadData() {
-        println("BEFORE")
        repo.getUsers()
            .subscribeOn(Schedulers.io())
            .observeOn(AndroidSchedulers.mainThread())
@@ -48,8 +48,6 @@ class UsersPresenter(
            },{
 
            })
-        println("AFTER")
-
     }
 
     fun backPressed(): Boolean {

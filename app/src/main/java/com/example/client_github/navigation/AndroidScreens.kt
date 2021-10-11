@@ -1,7 +1,8 @@
 package com.example.client_github.navigation
 
+import com.example.client_github.ui.screens.repos.RepoFragment
 import com.example.client_github.ui.screens.users.UsersFragment
-import com.example.client_github.ui.screens.userDetail.UserDetailFragment
+import com.example.client_github.ui.screens.fork.ForkFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object AndroidScreens {
@@ -11,9 +12,15 @@ object AndroidScreens {
         }
     }
 
-    fun userDetailScreen(login: String): SupportAppScreen {
+    fun reposScreen(login: String): SupportAppScreen {
+        return object : SupportAppScreen(){
+            override fun getFragment() = RepoFragment.newInstance(login)
+        }
+    }
+
+    fun forkScreen(forkCount: Int): SupportAppScreen {
         return object: SupportAppScreen(){
-            override fun getFragment() = UserDetailFragment.newInstance(login)
+            override fun getFragment() = ForkFragment.newInstance(forkCount)
         }
     }
 }
