@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.example.client_github.data.GithubUsersRepo
+import com.example.client_github.data.db.GithubDatabase
+import com.example.client_github.data.db.cache.UserCacheImpl
 import com.example.client_github.databinding.FragmentForkBinding
 import com.example.client_github.navigation.BackButtonListener
+import com.example.client_github.utils.AndroidNetworkStatus
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -15,7 +18,10 @@ class ForkFragment: MvpAppCompatFragment(), ForkView, BackButtonListener {
     private var _binding: FragmentForkBinding? = null
     private val binding get() = _binding!!
     private val presenter by moxyPresenter {
-        ForkPresenter(GithubUsersRepo(), com.example.client_github.App.instance.router)
+        ForkPresenter(GithubUsersRepo(
+            AndroidNetworkStatus(requireContext()),
+            UserCacheImpl(GithubDatabase.getInstance())
+        ), com.example.client_github.App.instance.router)
     }
 
     override fun onCreateView(

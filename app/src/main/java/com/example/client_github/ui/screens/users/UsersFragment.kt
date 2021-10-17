@@ -8,16 +8,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.client_github.App
 import com.example.client_github.databinding.FragmentUsersBinding
 import com.example.client_github.data.GithubUsersRepo
+import com.example.client_github.data.db.GithubDatabase
+import com.example.client_github.data.db.cache.UserCacheImpl
 import com.example.client_github.navigation.BackButtonListener
 import com.example.client_github.ui.images.GlideImageLoader
 import com.example.client_github.ui.screens.users.adapter.UsersRVAdapter
+import com.example.client_github.utils.AndroidNetworkStatus
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     private var _bind: FragmentUsersBinding? = null
     private val bind get() = _bind!!
-    private val presenter by moxyPresenter { UsersPresenter(GithubUsersRepo(), com.example.client_github.App.instance.router) }
+    private val presenter by moxyPresenter {
+        UsersPresenter(GithubUsersRepo(
+            AndroidNetworkStatus(requireContext()),
+            UserCacheImpl( GithubDatabase.getInstance())
+    ),
+            App.instance.router) }
     private val adapter by lazy {
         UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())}
 

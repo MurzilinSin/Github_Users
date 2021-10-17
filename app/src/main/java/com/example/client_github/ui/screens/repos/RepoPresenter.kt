@@ -1,7 +1,7 @@
 package com.example.client_github.ui.screens.repos
 
-import com.example.client_github.data.GithubUsersRepo
 import com.example.client_github.data.UserRepos
+import com.example.client_github.data.GithubRepositoriesRepo
 import com.example.client_github.navigation.AndroidScreens
 import com.example.client_github.presentation.IReposListPresenter
 import com.example.client_github.ui.screens.repos.adapter.RepoItemView
@@ -12,7 +12,7 @@ import ru.terrakok.cicerone.Router
 import java.lang.NullPointerException
 
 class RepoPresenter(
-    private val repo: GithubUsersRepo,
+    private val repo: GithubRepositoriesRepo,
     private val router: Router): MvpPresenter<RepoView>() {
     class ReposListPresenter: IReposListPresenter{
         val repos = mutableListOf<UserRepos>()
@@ -33,7 +33,9 @@ class RepoPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        println("TYT " + login)
         if (!login.isNullOrBlank()){
+            println("A TEPER TYT")
             loadData(login!!)
             reposListPresenter.itemClickListener = { itemView ->
                 router.navigateTo(AndroidScreens.forkScreen(reposListPresenter.repos[itemView.pos].forks))
@@ -46,6 +48,7 @@ class RepoPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ repos ->
+                println("REPOS " + repos)
                 reposListPresenter.repos.addAll(repos)
                 viewState.updateList()
             }, {

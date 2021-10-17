@@ -8,10 +8,8 @@ import kotlinx.android.parcel.Parcelize
 data class UserRepos(
     @Expose
     val id: String,
-
     @Expose
     val name: String? = null,
-
     @Expose
     val forks: Int
 ): Parcelable
